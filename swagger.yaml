@@ -1,0 +1,353 @@
+openapi: 3.0.0
+info:
+  title: Goals API
+  description: ""
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://goal-setter-api-e2i9.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterRequest"
+                - example:
+                    data:
+                      user:
+                        name: Jamie
+                        email: jamie24@yahoo.com
+                        password: secret
+            example:
+              data:
+                user:
+                  name: Jamie
+                  email: jamie24@yahoo.com
+                  password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginRequest"
+                - example:
+                    data:
+                      user:
+                        email: jamie24@yahoo.com
+                        password: secret
+            example:
+              data:
+                user:
+                  email: jamie24@yahoo.com
+                  password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /goals/create:
+    post:
+      tags:
+        - Goals
+      summary: create Job
+      operationId: createJob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/createJobRequest"
+                - example:
+                    data:
+                      targetGoal: lose 40 pounds
+                      targetDate: 07/01/2023
+            example:
+              data:
+                targetGoal: lose 40 pounds
+                targetDate: 07/01/2023
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /goals:
+    get:
+      tags:
+        - Goals
+      summary: get Jobs
+      operationId: getJobs
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Goals
+      summary: update Jobs
+      operationId: updateJobs
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/updateJobsRequest"
+                - example:
+                    data:
+                      goal:
+                        targetGoal: lose 10 pounds
+                        targetDate: 07/01/2023
+            example:
+              data:
+                goal:
+                  targetGoal: lose 10 pounds
+                  targetDate: 07/01/2023
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /goals/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: the goal id
+    delete:
+      tags:
+        - Goals
+      summary: delete Jobs
+      operationId: deleteJobs
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/Data"
+            - {}
+      example:
+        data:
+          user:
+            name: Jamie
+            email: jamie24@yahoo.com
+            password: secret
+    Data:
+      title: Data
+      required:
+        - user
+      type: object
+      properties:
+        user:
+          allOf:
+            - $ref: "#/components/schemas/User"
+            - {}
+      example:
+        user:
+          name: Jamie
+          email: jamie24@yahoo.com
+          password: secret
+    User:
+      title: User
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Jamie
+        email: jamie24@yahoo.com
+        password: secret
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/Data1"
+            - {}
+      example:
+        data:
+          user:
+            email: jamie24@yahoo.com
+            password: secret
+    Data1:
+      title: Data1
+      required:
+        - user
+      type: object
+      properties:
+        user:
+          allOf:
+            - $ref: "#/components/schemas/User1"
+            - {}
+      example:
+        user:
+          email: jamie24@yahoo.com
+          password: secret
+    User1:
+      title: User1
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: jamie24@yahoo.com
+        password: secret
+    createJobRequest:
+      title: createJobRequest
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/Data2"
+            - {}
+      example:
+        data:
+          targetGoal: lose 40 pounds
+          targetDate: 07/01/2023
+    Data2:
+      title: Data2
+      required:
+        - targetGoal
+        - targetDate
+      type: object
+      properties:
+        targetGoal:
+          type: string
+        targetDate:
+          type: string
+      example:
+        targetGoal: lose 40 pounds
+        targetDate: 07/01/2023
+    updateJobsRequest:
+      title: updateJobsRequest
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/Data3"
+            - {}
+      example:
+        data:
+          goal:
+            targetGoal: lose 10 pounds
+            targetDate: 07/01/2023
+    Data3:
+      title: Data3
+      required:
+        - goal
+      type: object
+      properties:
+        goal:
+          allOf:
+            - $ref: "#/components/schemas/Goal"
+            - {}
+      example:
+        goal:
+          targetGoal: lose 10 pounds
+          targetDate: 07/01/2023
+    Goal:
+      title: Goal
+      required:
+        - targetGoal
+        - targetDate
+      type: object
+      properties:
+        targetGoal:
+          type: string
+        targetDate:
+          type: string
+      example:
+        targetGoal: lose 10 pounds
+        targetDate: 07/01/2023
+    deleteJobsRequest:
+      title: deleteJobsRequest
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/Data3"
+            - {}
+      example:
+        data:
+          goal:
+            targetGoal: lose 10 pounds
+            targetDate: 07/01/2023
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Goals
+    description: ""
